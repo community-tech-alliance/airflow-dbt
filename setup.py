@@ -53,17 +53,17 @@ class UploadCommand(Command):
 
 
 setup(
-    name='airflow_dbt',
+    name='airflow_dbt_cta',
     version=about['__version__'],
     packages=find_packages(exclude=['tests']),
     install_requires=['apache-airflow >= 1.10.3'],
     author='GoCardless',
     author_email='engineering@gocardless.com',
-    description='Apache Airflow integration for dbt',
+    description='Apache Airflow integration for dbt (forked from https://github.com/gocardless/airflow-dbt)',
     long_description=long_description,
     long_description_content_type='text/markdown',
     license='MIT',
-    url='https://github.com/gocardless/airflow-dbt',
+    url='https://github.com/communitytechalliance/airflow-dbt',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
 

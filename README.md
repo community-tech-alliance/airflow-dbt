@@ -1,5 +1,7 @@
 # airflow-dbt
 
+**NOTE: this repository was forked from https://github.com/gocardless/airflow-dbt in order to release an updated version to PyPi.**
+
 This is a collection of [Airflow](https://airflow.apache.org/) operators to provide easy integration with [dbt](https://www.getdbt.com).
 
 ```py
