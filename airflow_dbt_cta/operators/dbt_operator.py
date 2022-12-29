@@ -8,8 +8,8 @@ class DbtBaseOperator(BaseOperator):
     Base dbt operator
     All other dbt operators are derived from this operator.
 
-    :param env: If set, passes the env variables to the subprocess handler
-    :type env: dict
+    :param env_vars: If set, passes the env_vars variables to the subprocess handler
+    :type env_vars: dict
     :param profiles_dir: If set, passed as the `--profiles-dir` argument to the `dbt` command
     :type profiles_dir: str
     :param target: If set, passed as the `--target` argument to the `dbt` command
@@ -38,11 +38,11 @@ class DbtBaseOperator(BaseOperator):
 
     ui_color = '#d6522a'
 
-    template_fields = ['env', 'vars']
+    template_fields = ['env_vars', 'vars']
 
     @apply_defaults
     def __init__(self,
-                 env=None,
+                 env_vars=None,
                  profiles_dir=None,
                  target=None,
                  dir='.',
@@ -61,7 +61,7 @@ class DbtBaseOperator(BaseOperator):
                  **kwargs):
         super(DbtBaseOperator, self).__init__(*args, **kwargs)
 
-        self.env = env or {}
+        self.env_vars = env_vars or {}
         self.profiles_dir = profiles_dir
         self.target = target
         self.dir = dir
@@ -80,7 +80,7 @@ class DbtBaseOperator(BaseOperator):
 
     def create_hook(self):
         self.hook = DbtCliHook(
-            env=self.env,
+            env_vars=self.env_vars,
             profiles_dir=self.profiles_dir,
             target=self.target,
             dir=self.dir,
