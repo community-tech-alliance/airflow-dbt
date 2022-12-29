@@ -8,7 +8,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 # Load the package's __version__.py module as a dictionary.
 about = {}
-with open(os.path.join(here, 'airflow_dbt', '__version__.py')) as f:
+with open(os.path.join(here, 'airflow_dbt_cta', '__version__.py')) as f:
     exec(f.read(), about)
 
 with io.open(os.path.join(here, 'README.md'), encoding='utf-8') as f:

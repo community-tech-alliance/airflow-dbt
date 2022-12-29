@@ -6,7 +6,7 @@ This is a collection of [Airflow](https://airflow.apache.org/) operators to prov
 
 ```py
 from airflow import DAG
-from airflow_dbt.operators.dbt_operator import (
+from airflow_dbt_cta.operators.dbt_operator import (
     DbtSeedOperator,
     DbtSnapshotOperator,
     DbtRunOperator,

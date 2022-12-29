@@ -1,8 +1,8 @@
 import datetime
 from unittest import TestCase, mock
 from airflow import DAG, configuration
-from airflow_dbt.hooks.dbt_hook import DbtCliHook
-from airflow_dbt.operators.dbt_operator import (
+from airflow_dbt_cta.hooks.dbt_hook import DbtCliHook
+from airflow_dbt_cta.operators.dbt_operator import (
     DbtSeedOperator,
     DbtSnapshotOperator,
     DbtRunOperator,
