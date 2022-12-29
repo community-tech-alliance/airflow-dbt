@@ -8,8 +8,6 @@ class DbtBaseOperator(BaseOperator):
     Base dbt operator
     All other dbt operators are derived from this operator.
 
-    :param env: If set, passes the env variables to the subprocess handler
-    :type env: dict
     :param profiles_dir: If set, passed as the `--profiles-dir` argument to the `dbt` command
     :type profiles_dir: str
     :param target: If set, passed as the `--target` argument to the `dbt` command
@@ -28,8 +26,6 @@ class DbtBaseOperator(BaseOperator):
     :type exclude: str
     :param select: If set, passed as the `--select` argument to the `dbt` command
     :type select: str
-    :param selector: If set, passed as the `--selector` argument to the `dbt` command
-    :type selector: str
     :param dbt_bin: The `dbt` CLI. Defaults to `dbt`, so assumes it's on your `PATH`
     :type dbt_bin: str
     :param verbose: The operator will log verbosely to the Airflow logs
@@ -38,11 +34,10 @@ class DbtBaseOperator(BaseOperator):
 
     ui_color = '#d6522a'
 
-    template_fields = ['env', 'vars']
+    template_fields = ['vars']
 
     @apply_defaults
     def __init__(self,
-                 env=None,
                  profiles_dir=None,
                  target=None,
                  dir='.',
@@ -50,7 +45,6 @@ class DbtBaseOperator(BaseOperator):
                  models=None,
                  exclude=None,
                  select=None,
-                 selector=None,
                  dbt_bin='dbt',
                  verbose=True,
                  warn_error=False,
@@ -61,7 +55,6 @@ class DbtBaseOperator(BaseOperator):
                  **kwargs):
         super(DbtBaseOperator, self).__init__(*args, **kwargs)
 
-        self.env = env or {}
         self.profiles_dir = profiles_dir
         self.target = target
         self.dir = dir
@@ -72,7 +65,6 @@ class DbtBaseOperator(BaseOperator):
         self.schema = schema
         self.exclude = exclude
         self.select = select
-        self.selector = selector
         self.dbt_bin = dbt_bin
         self.verbose = verbose
         self.warn_error = warn_error
@@ -80,7 +72,6 @@ class DbtBaseOperator(BaseOperator):
 
     def create_hook(self):
         self.hook = DbtCliHook(
-            env=self.env,
             profiles_dir=self.profiles_dir,
             target=self.target,
             dir=self.dir,
@@ -91,7 +82,6 @@ class DbtBaseOperator(BaseOperator):
             models=self.models,
             exclude=self.exclude,
             select=self.select,
-            selector=self.selector,
             dbt_bin=self.dbt_bin,
             verbose=self.verbose,
             warn_error=self.warn_error)
