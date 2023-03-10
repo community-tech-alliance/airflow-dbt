@@ -1,4 +1,5 @@
 from airflow_dbt_cta.hooks.dbt_hook import DbtCliHook
+from airflow.exceptions import AirflowSkipException
 from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
 
@@ -38,7 +39,7 @@ class DbtBaseOperator(BaseOperator):
 
     ui_color = '#d6522a'
 
-    template_fields = ['env_vars', 'vars']
+    template_fields = ['env_vars', 'vars', 'skip']
 
     @apply_defaults
     def __init__(self,
@@ -57,6 +58,7 @@ class DbtBaseOperator(BaseOperator):
                  full_refresh=False,
                  data=False,
                  schema=False,
+                 skip=False,
                  *args,
                  **kwargs):
         super(DbtBaseOperator, self).__init__(*args, **kwargs)
@@ -76,6 +78,7 @@ class DbtBaseOperator(BaseOperator):
         self.dbt_bin = dbt_bin
         self.verbose = verbose
         self.warn_error = warn_error
+        self.skip = skip
         self.create_hook()
 
     def create_hook(self):
@@ -105,6 +108,8 @@ class DbtRunOperator(DbtBaseOperator):
         super(DbtRunOperator, self).__init__(profiles_dir=profiles_dir, target=target, *args, **kwargs)
 
     def execute(self, context):
+        if self.skip:
+            raise AirflowSkipException
         self.create_hook().run_cli('run')
 
 
@@ -114,6 +119,8 @@ class DbtTestOperator(DbtBaseOperator):
         super(DbtTestOperator, self).__init__(profiles_dir=profiles_dir, target=target, *args, **kwargs)
 
     def execute(self, context):
+        if self.skip:
+            raise AirflowSkipException
         self.create_hook().run_cli('test')
 
 
@@ -124,6 +131,8 @@ class DbtDocsGenerateOperator(DbtBaseOperator):
                                                       **kwargs)
 
     def execute(self, context):
+        if self.skip:
+            raise AirflowSkipException
         self.create_hook().run_cli('docs', 'generate')
 
 
@@ -133,6 +142,8 @@ class DbtSnapshotOperator(DbtBaseOperator):
         super(DbtSnapshotOperator, self).__init__(profiles_dir=profiles_dir, target=target, *args, **kwargs)
 
     def execute(self, context):
+        if self.skip:
+            raise AirflowSkipException
         self.create_hook().run_cli('snapshot')
 
 
@@ -142,6 +153,8 @@ class DbtSeedOperator(DbtBaseOperator):
         super(DbtSeedOperator, self).__init__(profiles_dir=profiles_dir, target=target, *args, **kwargs)
 
     def execute(self, context):
+        if self.skip:
+            raise AirflowSkipException
         self.create_hook().run_cli('seed')
 
 
@@ -151,6 +164,8 @@ class DbtDepsOperator(DbtBaseOperator):
         super(DbtDepsOperator, self).__init__(profiles_dir=profiles_dir, target=target, *args, **kwargs)
 
     def execute(self, context):
+        if self.skip:
+            raise AirflowSkipException
         self.create_hook().run_cli('deps')
 
 
@@ -160,4 +175,6 @@ class DbtCleanOperator(DbtBaseOperator):
         super(DbtCleanOperator, self).__init__(profiles_dir=profiles_dir, target=target, *args, **kwargs)
 
     def execute(self, context):
+        if self.skip:
+            raise AirflowSkipException
         self.create_hook().run_cli('clean')
