@@ -80,7 +80,7 @@ There are six operators currently implemented:
 * `DbtCleanOperator`
   * Calls [`dbt clean`](https://docs.getdbt.com/docs/clean)
 * `DbtBuildOperator`
-  * Calls [`dbt clean`](https://docs.getdbt.com/reference/commands/build)
+  * Calls [`dbt build`](https://docs.getdbt.com/reference/commands/build)
 
 
 Each of the above operators accept the following arguments:
