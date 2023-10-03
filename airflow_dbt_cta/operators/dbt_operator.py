@@ -178,3 +178,13 @@ class DbtCleanOperator(DbtBaseOperator):
         if self.skip:
             raise AirflowSkipException
         self.create_hook().run_cli('clean')
+
+class DbtBuildOperator(DbtBaseOperator):
+    @apply_defaults
+    def __init__(self, profiles_dir=None, target=None, *args, **kwargs):
+        super(DbtBuildOperator, self).__init__(profiles_dir=profiles_dir, target=target, *args, **kwargs)
+
+    def execute(self, context):
+        if self.skip:
+            raise AirflowSkipException
+        self.create_hook().run_cli('build')

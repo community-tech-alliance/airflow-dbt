@@ -12,6 +12,7 @@ from airflow_dbt_cta.operators.dbt_operator import (
     DbtRunOperator,
     DbtTestOperator,
     DbtCleanOperator,
+    DbtBuildOperator,
 )
 from airflow.utils.dates import days_ago
 
@@ -34,6 +35,10 @@ with DAG(dag_id='dbt', default_args=default_args, schedule_interval='@daily') as
     task_id='dbt_run',
   )
 
+  dbt_build = DbtBuildOperator(
+    task_id='dbt_build',
+  )
+
   dbt_test = DbtTestOperator(
     task_id='dbt_test',
     retries=0,  # Failing tests would fail the task, and we don't want Airflow to try again
@@ -43,7 +48,7 @@ with DAG(dag_id='dbt', default_args=default_args, schedule_interval='@daily') as
     task_id='dbt_clean',
   )
 
-  dbt_seed >> dbt_snapshot >> dbt_run >> dbt_test >> dbt_clean
+  dbt_seed >> dbt_snapshot >> dbt_run >> dbt_build >> dbt_test >> dbt_clean
 ```
 
 ## Installation
@@ -58,7 +63,7 @@ It will also need access to the `dbt` CLI, which should either be on your `PATH`
 
 ## Usage
 
-There are five operators currently implemented:
+There are six operators currently implemented:
 
 * `DbtDocsGenerateOperator`
   * Calls [`dbt docs generate`](https://docs.getdbt.com/reference/commands/cmd-docs)
@@ -74,6 +79,8 @@ There are five operators currently implemented:
   * Calls [`dbt test`](https://docs.getdbt.com/docs/test)
 * `DbtCleanOperator`
   * Calls [`dbt clean`](https://docs.getdbt.com/docs/clean)
+* `DbtBuildOperator`
+  * Calls [`dbt build`](https://docs.getdbt.com/reference/commands/build)
 
 
 Each of the above operators accept the following arguments:
