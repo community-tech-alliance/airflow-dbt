@@ -39,7 +39,7 @@ class DbtBaseOperator(BaseOperator):
 
     ui_color = '#d6522a'
 
-    template_fields = ['env_vars', 'vars', 'skip']
+    template_fields = ['env_vars', 'vars', 'skip', 'full_refresh']
 
     @apply_defaults
     def __init__(self,
