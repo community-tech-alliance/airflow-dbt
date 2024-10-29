@@ -1,7 +1,6 @@
 from airflow_dbt_cta.hooks.dbt_hook import DbtCliHook
 from airflow.exceptions import AirflowSkipException
 from airflow.models import BaseOperator
-from airflow.utils.decorators import apply_defaults
 
 
 class DbtBaseOperator(BaseOperator):
@@ -41,7 +40,6 @@ class DbtBaseOperator(BaseOperator):
 
     template_fields = ['env_vars', 'vars', 'skip', 'full_refresh']
 
-    @apply_defaults
     def __init__(self,
                  env_vars=None,
                  profiles_dir=None,
@@ -103,7 +101,6 @@ class DbtBaseOperator(BaseOperator):
 
 
 class DbtRunOperator(DbtBaseOperator):
-    @apply_defaults
     def __init__(self, profiles_dir=None, target=None, *args, **kwargs):
         super(DbtRunOperator, self).__init__(profiles_dir=profiles_dir, target=target, *args, **kwargs)
 
@@ -114,7 +111,6 @@ class DbtRunOperator(DbtBaseOperator):
 
 
 class DbtTestOperator(DbtBaseOperator):
-    @apply_defaults
     def __init__(self, profiles_dir=None, target=None, *args, **kwargs):
         super(DbtTestOperator, self).__init__(profiles_dir=profiles_dir, target=target, *args, **kwargs)
 
@@ -125,7 +121,6 @@ class DbtTestOperator(DbtBaseOperator):
 
 
 class DbtDocsGenerateOperator(DbtBaseOperator):
-    @apply_defaults
     def __init__(self, profiles_dir=None, target=None, *args, **kwargs):
         super(DbtDocsGenerateOperator, self).__init__(profiles_dir=profiles_dir, target=target, *args,
                                                       **kwargs)
@@ -137,7 +132,6 @@ class DbtDocsGenerateOperator(DbtBaseOperator):
 
 
 class DbtSnapshotOperator(DbtBaseOperator):
-    @apply_defaults
     def __init__(self, profiles_dir=None, target=None, *args, **kwargs):
         super(DbtSnapshotOperator, self).__init__(profiles_dir=profiles_dir, target=target, *args, **kwargs)
 
@@ -148,7 +142,6 @@ class DbtSnapshotOperator(DbtBaseOperator):
 
 
 class DbtSeedOperator(DbtBaseOperator):
-    @apply_defaults
     def __init__(self, profiles_dir=None, target=None, *args, **kwargs):
         super(DbtSeedOperator, self).__init__(profiles_dir=profiles_dir, target=target, *args, **kwargs)
 
@@ -159,7 +152,6 @@ class DbtSeedOperator(DbtBaseOperator):
 
 
 class DbtDepsOperator(DbtBaseOperator):
-    @apply_defaults
     def __init__(self, profiles_dir=None, target=None, *args, **kwargs):
         super(DbtDepsOperator, self).__init__(profiles_dir=profiles_dir, target=target, *args, **kwargs)
 
@@ -170,7 +162,6 @@ class DbtDepsOperator(DbtBaseOperator):
 
 
 class DbtCleanOperator(DbtBaseOperator):
-    @apply_defaults
     def __init__(self, profiles_dir=None, target=None, *args, **kwargs):
         super(DbtCleanOperator, self).__init__(profiles_dir=profiles_dir, target=target, *args, **kwargs)
 
@@ -180,7 +171,6 @@ class DbtCleanOperator(DbtBaseOperator):
         self.create_hook().run_cli('clean')
 
 class DbtBuildOperator(DbtBaseOperator):
-    @apply_defaults
     def __init__(self, profiles_dir=None, target=None, *args, **kwargs):
         super(DbtBuildOperator, self).__init__(profiles_dir=profiles_dir, target=target, *args, **kwargs)
 
