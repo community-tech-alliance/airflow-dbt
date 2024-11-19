@@ -10,6 +10,8 @@ pre-commit run                      # Run once to make sure the pre-commit works
 
 All done! Be on the lookout for any secrets that were detected during the pre-commit step from your local machine.
 
+Note: if you're using GitHub Desktop, this should still work if you follow the above steps before and configure GitHub Desktop to use your default shell application (such as Terminal, iTerm 2, etc.). You can change this in `GitHub Desktop -> Settings -> Integrations -> Shell`.
+
 **NOTE: this repository was forked from https://github.com/gocardless/airflow-dbt in order to release an updated version to PyPi.**
 
 This is a collection of [Airflow](https://airflow.apache.org/) operators to provide easy integration with [dbt](https://www.getdbt.com).
