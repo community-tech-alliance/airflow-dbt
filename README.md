@@ -1,5 +1,17 @@
 # airflow-dbt
 
+### ATTENTION: This repo is set up for secrets scanning using pre-commit and TruffleHog. pre-commit (as the name implies) will run before git commit commands. For the purposes of secrets detection, we want to catch them before they're committed and pushed to GitHub, as opposed to having a GitHub Action that catches them after they've already been exposed. TruffleHog is an open-source secrets detection tool that we can leverage for local scanning for this exact purpose. Follow the instructions below after cloning the repo to your local machine. 
+
+```
+brew install pre-commit trufflehog  # This only needs to be done once on your machine
+pre-commit install                  # Note that this needs to be run for each repo that has a pre-commit config
+pre-commit run                      # Run once to make sure the pre-commit works
+```
+
+All done! Be on the lookout for any secrets that were detected during the pre-commit step from your local machine.
+
+Note: if you're using GitHub Desktop, this should still work if you follow the above steps before and configure GitHub Desktop to use your default shell application (such as Terminal, iTerm 2, etc.). You can change this in `GitHub Desktop -> Settings -> Integrations -> Shell`.
+
 **NOTE: this repository was forked from https://github.com/gocardless/airflow-dbt in order to release an updated version to PyPi.**
 
 This is a collection of [Airflow](https://airflow.apache.org/) operators to provide easy integration with [dbt](https://www.getdbt.com).
